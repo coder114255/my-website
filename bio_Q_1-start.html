@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>com1</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('ใน.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100%;
+        
+        }
+
+        .infroation {
+            border-style: solid;
+            border-color: rgb(51, 68, 6);
+            background-color: rgb(161, 240, 130);
+            margin-top: 10px;
+            padding: 5px;
+            width: 200px;
+            margin: 20px auto;
+        }
+
+        button:hover {
+            transition: all 0.4s;
+            background-color: rgb(253, 255, 116);
+        }
+
+        .volume-label {
+            border: 2px solid rgb(51, 68, 6); /* กำหนดกรอบ */
+            padding: 5px; /* เพิ่มระยะห่างภายในกรอบ */
+            display: inline-block; /* ให้กรอบอยู่ในบรรทัดเดียวกับ input */
+            margin-right: 10px; /* เพิ่มระยะห่างระหว่างกรอบกับ input */
+            background-color: rgba(161, 240, 130, 0.7);
+        }
+    </style>
+</head>
+<body>
+    <div class="topheadpicture">
+        <img style="width: 100%; box-shadow: 10px 10px 10px; border-radius: 10px;" src="ปก.png">
+    </div>
+    <div>
+        <label class="volume-label" for="volumeControl">Volume:</label> <!-- เพิ่มคลาสที่กำหนดกรอบ -->
+        <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="1">
+    </div>
+    <button id="toggleAudioButton" onclick="toggleAudio()"><img src="เปิดเสียง.png" style="height: 20px; border-style: none;" id="off_on_back_soundtrack"></button>
+    <audio autoplay loop id="bgAudio">
+        <source src="emotional-piano-005-am-80-97777.mp3" type="audio/mpeg">
+    </audio>
+    <script>
+        var audioElement = document.getElementById("bgAudio");
+        var toggleButton = document.getElementById("toggleAudioButton");
+        var isPlaying = true;
+
+        function toggleAudio() {
+            if (isPlaying) {
+                audioElement.pause();
+                document.getElementById("off_on_back_soundtrack").src = "ปิดเสียง.png";
+            } else {
+                audioElement.play();
+                document.getElementById("off_on_back_soundtrack").src = "เปิดเสียง.png";
+            }
+            isPlaying = !isPlaying;
+        }
+        volumeControl.addEventListener('input', function() {
+            audioElement.volume = this.value;
+        });
+    </script> 
+    <div class="infroation">    
+        <button class="infroation" type="button" onclick="window.location.href='bio_Q_1-1.html'">ข้อ 1</button>
+        <button class="infroation" type="button" onclick="window.location.href='bio_Q_1-2.html'">ข้อ 2</button>
+        <button class="infroation" type="button" onclick="window.location.href='bio_Q_1-3.html'">ข้อ 3</button>
+        <button class="infroation" type="button" onclick="window.location.href='bio_Q_1-4.html'">ข้อ 4</button>
+        <button class="infroation" type="button" onclick="window.location.href='bio_Q_1-5.html'">ข้อ 5</button>
+        <button class="infroation" type="button" onclick="window.location.href='bio_Q_1-6.html'">ข้อ 6</button>
+        <button class="infroation" type="button" onclick="window.location.href='bio_Q_1-7.html'">ข้อ 7</button>
+        <button class="infroation" type="button" onclick="window.location.href='bio_Q_1-8.html'">ข้อ 8</button>
+        <button class="infroation" type="button" onclick="window.location.href='bio_Q_1-9.html'">ข้อ 9</button>
+        <button class="infroation" type="button" onclick="window.location.href='bio_Q_1-10.html'">ข้อ 10</button>
+    </div>
+</body>
+</html>

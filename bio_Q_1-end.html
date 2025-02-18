@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สรุปผลคะแนน</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 0; /* ลบ padding */
+            margin: 0; /* ลบ margin */
+            display: flex; /* ใช้ flexbox เพื่อจัดเรียง */
+            flex-direction: column; /* ตั้งแนวเป็นแนวตั้ง */
+            justify-content: center; /* จัดให้อยู่กลางแนวตั้ง */
+            align-items: center; /* จัดให้อยู่กลางแนวนอน */
+            background-image: url('ใน.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh; /* กำหนดความสูงขั้นต่ำให้เต็มหน้าจอ */
+            max-width: 520px; /* กำหนดความกว้างสูงสุด */
+            margin: auto; /* จัดให้อยู่กลางหน้าจอ */
+        }
+        .summary-header {
+            background-color: rgba(242, 243, 159); /* เปลี่ยนเป็นสีขาวโปร่งใส */
+            border: 2px solid rgba(0, 0, 0, 0.5); /* กรอบสีเทาอ่อน */
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px; /* เพิ่มระยะห่างด้านล่างของกรอบ "สรุปผลแบบทดสอบ" */
+        }
+        .score-box {
+            background-color: rgb(242, 243, 159); /* เปลี่ยนเป็นสีขาวโปร่งใส */
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            border: 2px solid rgba(0, 0, 0, 0.5); /* กรอบสีเทาอ่อน */
+            font-size: 30px;
+        }
+        .score {
+            font-size: 30px;
+            font-weight: bold;
+        }
+        .message {
+            font-size: 30px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- กรอบสรุปผลแบบทดสอบอยู่ด้านบน -->
+    <div class="summary-header">สรุปผลแบบทดสอบ</div>
+
+    <!-- กรอบสรุปคะแนน -->
+    <div class="score-box">
+        <p>คะแนนของคุณ:</p>
+        <p class="score" id="score"></p>
+        <p class="message" id="message"></p>
+    </div>
+
+    <script>
+        // ดึงคะแนนจาก localStorage
+        var score = localStorage.getItem('quizScore') ? parseInt(localStorage.getItem('quizScore')) : 0;
+
+        // แสดงคะแนนในหน้าเว็บ
+        document.getElementById("score").innerText = score + " / 20";
+
+        // แสดงข้อความตามคะแนนที่ได้
+        var messageElement = document.getElementById("message");
+        if (score == 20) {
+            messageElement.innerText = "ยอดเยี่ยม! คุณได้คะแนนเต็ม!";
+        } else if (score >= 14) {
+            messageElement.innerText = "ดีมาก! คุณทำได้ดี";
+        } else if (score >= 10) {
+            messageElement.innerText = "คุณทำได้ดี แต่ยังมีจุดที่ต้องปรับปรุง";
+        } else {
+            messageElement.innerText = "ลองใหม่อีกครั้งเพื่อพัฒนาผลลัพธ์!";
+        }
+
+        // ล้างคะแนนเมื่อจบการทดสอบ
+        localStorage.removeItem('quizScore');
+    </script>
+</body>
+</html>

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        .reply {
+            width: 47%;  /* แต่ละกล่องกว้าง 47% */
+            text-align: center;
+            background-color: aqua;
+            height: 50px;
+            border-color: black;
+            border-style: solid;
+            margin-bottom: 10px; /* เพิ่มระยะห่างระหว่างกล่อง */
+        }
+
+        /* ใช้ Flexbox และทำให้กล่องที่เกินตกไปบรรทัดใหม่ */
+        .reply-container {
+            padding-top: 5%;
+            display: flex;
+            flex-wrap: wrap; /* ทำให้กล่องที่เกินตกไปบรรทัดใหม่ */
+            gap: 10px; /* เพิ่มระยะห่างระหว่างกล่อง */
+            justify-content: flex-start;
+        }
+
+        .buttonstyle {
+            width: 100%;
+            height: 100%;
+            border-radius: 0%;
+        }
+
+        button:hover {
+            transition: all 0.4s;
+            background-color: rgb(221, 222, 238);
+        }
+
+        /* จัดกล่องให้ลอยอยู่กลางหน้าจอ */
+        .respond_ {
+            width: 50%;
+            border-style: solid rgb(10, 20, 20);
+            background-color: #b0e4e1;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 999;
+            display: none;
+        }
+
+        .respond_wrong {
+            border-style: solid rgb(10, 20, 20);
+            background-color: #b0e4e1;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 999;
+            display: none;
+        }
+
+        .question {
+            border-style: solid;
+            border-color: rgb(99, 23, 23);
+            background-color: rgb(238, 225, 225);
+            padding: 20px;
+            max-width: 90%;
+            max-width: 330px;
+            margin: auto;
+            font-size: 20px;
+            margin-top: 50px;
+        }
+
+        .in_the_respond_box {
+            background-color: #6eb3af;
+            margin: 5%;
+            padding: 1px;
+            text-align: center;
+            border-style: solid;
+            background-color: aliceblue;
+            word-wrap: break-word; /* ตัดคำเมื่อเกินความกว้างของกล่อง */
+            overflow-wrap: break-word; /* ตัดคำที่ยาวเกินไป */
+            white-space: normal; /* ทำให้ข้อความสามารถตัดบรรทัดได้ */
+            max-width: 90%;
+            max-width: 750px; /* ตั้งความกว้างสูงสุดให้กล่องข้อความ เพื่อป้องกันข้อความทะลุออกไป */
+}
+
+        /* เพิ่มเพื่อให้ง่ายต่อการคลิกปิด */
+        .close-button {
+            float: right;
+            background-color: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+
+        .container {
+            position: relative;
+            display: inline-block;
+        }
+        .image {
+            display: block;
+        }
+        .textbox {
+            position: absolute;
+            top: -150%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgb(207, 172, 172);
+            padding: 10px;
+            padding-top: 0%;
+            padding-bottom: 0%;
+            display: none;
+            color: black;
+            width: 200%;
+        }
+        .container:hover .textbox {
+            display: block;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('ใน.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100%;
+        }
+        .volume-label {
+    border: 2px solid rgb(51, 68, 6); /* กำหนดกรอบ */
+    padding: 5px; /* เพิ่มระยะห่างภายในกรอบ */
+    display: inline-block; /* ให้กรอบอยู่ในบรรทัดเดียวกับ input */
+    margin-right: 10px; /* เพิ่มระยะห่างระหว่างกรอบกับ input */
+    background-color: rgba(161, 240, 130, 0.7);
+    border-radius: 5px; /* เพิ่มความมนให้กรอบ */
+        }
+    .responsive-image {
+        width: 70%; /* ปรับขนาดตามความกว้างของคอนเทนเนอร์ */
+        height: auto; /* รักษาอัตราส่วนของรูปภาพ */
+    }
+    </style>
+</head>
+<body>
+    <div>
+        <label class="volume-label" for="volumeControl">Volume:</label>
+        <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="1">
+    </div>
+    <button id="toggleAudioButton" onclick="toggleAudio()"><img src="เปิดเสียง.png" style="height: 20px; border-style: none;" id="off_on_back_soundtrack"></button>
+    <audio autoplay loop id="bgAudio">
+        <source src="chilldub-23869.mp3" type="audio/mpeg">
+    </audio>
+    <script>
+        var audioElement = document.getElementById("bgAudio");
+            var toggleButton = document.getElementById("toggleAudioButton");
+            var isPlaying = true;
+            function openrespon() {
+                document.getElementById("respon-").style.display = "block";
+                var audio_ani = document.getElementById("myAudioco");
+                audio_ani.play();
+                if (isPlaying) {
+                    fadeToLevelAndBack(0.1);
+                }
+            }
+    
+            function closerespon() {
+                document.getElementById("respon-").style.display = "none";
+            }
+    
+            function openrespon_wrong() {
+                document.getElementById("respon-wrong").style.display = "block";
+                var audio_ani = document.getElementById("myAudiowr");
+                audio_ani.play();
+                if (isPlaying) {
+                    fadeToLevelAndBack(0.1);
+                }
+            }
+    
+            function closerespon_wrong() {
+                document.getElementById("respon-wrong").style.display = "none";
+            }
+            function toggleAudio() {
+                if (isPlaying) {
+                    audioElement.pause();
+                    document.getElementById("off_on_back_soundtrack").src="ปิดเสียง.png";
+                } else {
+                    audioElement.play();
+                    document.getElementById("off_on_back_soundtrack").src="เปิดเสียง.png";
+                }
+                isPlaying = !isPlaying;
+            }
+            function fadeToLevelAndBack(targetVolume) {
+                var audio = document.getElementById("bgAudio");
+                var originalVolume = audio.volume;  // เก็บค่าเสียงเริ่มต้น
+                var fadeDuration = 500;  // ระยะเวลาที่ใช้ในการลดเสียง (1 วินาที)
+    
+                // ค่อยๆ ลดเสียงลงเหลือระดับที่กำหนด
+                var fadeOutInterval = setInterval(function() {
+                    if (audio.volume > targetVolume) {
+                        audio.volume = Math.max(audio.volume - 0.1, targetVolume);  // ลดเสียงทีละ 0.1 จนถึง targetVolume
+                    } else {
+                        clearInterval(fadeOutInterval);  // หยุดการลดเสียงเมื่อถึงระดับที่กำหนด
+                    }
+                }, fadeDuration / 10);  // ลดเสียงทุก 100ms
+    
+                // หลังจากลดเสียงแล้ว ให้เสียงคงอยู่ระดับนี้ 5 วินาที
+                setTimeout(function() {
+                    // ค่อยๆ เพิ่มเสียงกลับเป็นระดับเดิม
+                    var fadeInInterval = setInterval(function() {
+                        if (audio.volume < originalVolume) {
+                            audio.volume = Math.min(audio.volume + 0.1, originalVolume);  // เพิ่มเสียงทีละ 0.1 จนถึง originalVolume
+                        } else {
+                            clearInterval(fadeInInterval);  // หยุดการเพิ่มเสียงเมื่อกลับถึงระดับเดิม
+                        }
+                    }, fadeDuration / 10);  // เพิ่มเสียงทุก 100ms
+                }, 5000);  // รอ 5 วินาทีเพื่อเริ่มเพิ่มเสียงกลับ
+            }
+            volumeControl.addEventListener('input', function() {
+            audioElement.volume = this.value;
+        });
+        var score = localStorage.getItem('quizScore') ? parseInt(localStorage.getItem('quizScore')) : 0;
+
+    function openrespon() {
+        document.getElementById("respon-").style.display = "block";
+        var audio_ani = document.getElementById("myAudioco");
+        audio_ani.play();
+        if (isPlaying) {
+            fadeToLevelAndBack(0.1);
+        }
+
+        // เพิ่มคะแนนเมื่อผู้ใช้ตอบถูก แต่ตรวจสอบไม่ให้คะแนนเกิน 10
+        if (score < 20) {
+            score += 1; // เพิ่มคะแนนทีละ 1
+        }
+        localStorage.setItem('quizScore', score); // เก็บคะแนนใน localStorage
+    }
+
+    function openrespon_wrong() {
+        document.getElementById("respon-wrong").style.display = "block";
+        var audio_ani = document.getElementById("myAudiowr");
+        audio_ani.play();
+        if (isPlaying) {
+            fadeToLevelAndBack(0.1);
+        }
+        // ไม่ต้องอัปเดตคะแนนเมื่อผู้ใช้ตอบผิด
+    }
+</script>
+
+    <div style="text-align: center;">
+    </div>
+
+    <div class="question">
+        การขับรถย้อนศรมีโทษปรับสูงสุดเท่าใด
+        <br>ข้อใดถูก</div>
+
+    <div class="reply-container">
+
+        <div class="reply">
+            <button class="buttonstyle" onclick="openrespon_wrong()">500 บาท
+            </button>
+        </div>
+
+        <div class="reply">
+            <button class="buttonstyle" onclick="openrespon_wrong()">1,000 บาท</button>
+        </div>
+
+        <div class="reply">
+            <button class="buttonstyle" onclick="openrespon()">2,000 บาท</button>
+        </div>
+
+        <div class="reply">
+            <button class="buttonstyle" onclick="openrespon_wrong()">5,000 บาท</button>
+        </div>
+
+    </div>
+
+    <!-- ตอบถูก -->
+    <div class="respond_" id="respon-">
+        <button class="close-button" onclick="closerespon()">x</button>
+        <div class="in_the_respond_box">
+            <p>ถูกต้อง</p>
+        </div>
+        <div class="in_the_respond_box">
+            <button class="buttonstyle" onclick="window.location.href='bio_Q_1-6.html'">
+                <img src="Red-thick-line-stroke-arrow-clipart-arrow-lines-strokes_191790_wh860.png" style="height: 30px;"> 
+            </button>
+        </div>
+    </div>
+
+    <!-- ตอบผิด -->
+    <div class="respond_wrong" id="respon-wrong">
+        <button class="close-button" onclick="closerespon_wrong()">x</button>
+        <div class="in_the_respond_box">
+            <p>ผิด</p>
+        </div>
+        <div class="in_the_respond_box">
+            <div style="text-align: center;">
+                <p>เฉลย</p>
+            </div>
+                <p>
+                    เฉลย: 2,000 บาท
+                </p>
+            <div style="margin: 5%;">
+                <p>
+                    อธิบาย: การขับรถย้อนศรเป็นความผิดจราจรที่มีโทษปรับไม่เกิน 2,000 บาท
+                </p>
+            </div>
+        </div>
+        <div class="in_the_respond_box">
+            <div class="container">
+                <button class="buttonstyle" onclick="window.location.href='bio_Q_1-6.html'">
+                    <img src="Red-thick-line-stroke-arrow-clipart-arrow-lines-strokes_191790_wh860.png" style="height: 30px;"> 
+                </button>
+                <div class="textbox">
+                    <p>
+                        กดเพื่อไปข้อต่อไป
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <audio id="myAudioco">
+        <source src="goodresult-82807.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="myAudiowr">
+        <source src="wrong sound.mp3" type="audio/mpeg">
+    </audio>
+</body>
+</html>
